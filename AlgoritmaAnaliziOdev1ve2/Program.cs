@@ -20,6 +20,7 @@ namespace AlgoritmaAnaliziOdev1ve2
 
             int ortaindex;
             int sayac = 0;
+            int kontrol = 0;
             while (aranacakAralikMax >= aranacakAralikMin)
             {
                 sayac++;
@@ -28,6 +29,7 @@ namespace AlgoritmaAnaliziOdev1ve2
 
                 if (ortadakieleman == Number)
                 {
+                    kontrol = 1;
                     Console.WriteLine("aranan sayi bulundu " + ortaindex + " ıncı eleman");
                     return sayac;
                 }
@@ -44,8 +46,8 @@ namespace AlgoritmaAnaliziOdev1ve2
                 }
 
             }
-
-            return -1;
+            return sayac;
+            if (kontrol == 0) { Console.WriteLine("sayi yok"); }
 
         }
 
@@ -54,16 +56,19 @@ namespace AlgoritmaAnaliziOdev1ve2
 
 
 
-            int[] diziboyutları = { 100, 1000, 10000, 100000, 1000000 };
+            int[] diziboyutları = { 10,100, 1000, 10000, 100000, 1000000 };
 
             int[] herdizininhamlesayilari = { 0, 0, 0, 0, 0 };
 
             int[][] dizi = new int[diziboyutları.Length][];
 
+            Double[] gecenzaman = new Double[5]; // her bir n için arama katsayısı
+
             int dizisayac = 0;
 
             for (int k = 0; k < diziboyutları.Length; k++)
             {
+                
                 dizisayac++;
 
                 dizi[k] = new int[diziboyutları[k]];
@@ -88,7 +93,7 @@ namespace AlgoritmaAnaliziOdev1ve2
                 }
                 Random aranacak = new Random();
                 Stopwatch watch = new Stopwatch();
-                string[] gecenzaman = new string[5]; // her bir n için arama katsayısı
+              
 
                 for (int i = 0; i < dizi[k].Length; i++)
                 {
@@ -100,29 +105,28 @@ namespace AlgoritmaAnaliziOdev1ve2
                     watch.Stop();
 
                     TimeSpan ts = watch.Elapsed;
-                    gecenzaman[k] = String.Format("{0:00}:{1:00}:{2:00}.{3:00}.{4:00}",
-                 ts.Hours, ts.Minutes, ts.Seconds, ts.TotalMilliseconds,
-                 ts.Milliseconds / 10);
+                    gecenzaman[k] = gecenzaman[k]+ts.TotalMilliseconds;
+                   
 
                     Console.WriteLine("zaman" + k + "=" + gecenzaman[k]);
 
-                    if (donen == -1)
-                    {
-                        Console.WriteLine("aranan eleman dizide yok ");
-                    }
+                    Console.WriteLine(i + ".donen hamle"+donen);
 
-                    else
-                    {
-                        Console.WriteLine(i + ".donen hamle");
-                        herdizininhamlesayilari[k] = herdizininhamlesayilari[k] + donen;
-                    }
+                    herdizininhamlesayilari[k] = herdizininhamlesayilari[k] + donen;
+                    
                 }
-
-
+                if (k == 5)
+                {
+                    Console.WriteLine(herdizininhamlesayilari[k] + "hamle");
+                    break;
+                   
+                }
+                
             }
 
 
 
+         
             Console.ReadLine();
         }
     }
